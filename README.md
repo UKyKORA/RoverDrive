@@ -9,7 +9,7 @@
 ## To add:
 ```
 cd ${CATKIN_WS}/src
-git submodule add https://github.com/UKyKORA/RoverDrive.git rover_drive
+git submodule add https://github.com/UKyKORA/RoverDrive.git drive
 ```
 
 _NOTE: This respository is meant to be a submodule for a larger ROS catkin workspace._
