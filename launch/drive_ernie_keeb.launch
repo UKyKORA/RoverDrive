@@ -1,0 +1,8 @@
+<launch>
+  <group ns="drive">
+    <rosparam file="$(find drive)/config/drive_ernie.yaml" />
+  </group>
+  <node pkg="drive" type="drive_4_motor.py" name="four_wheel_drive"></node>
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop" args="_speed:=0.8 _turn:=1.47 cmd_vel:=drive_setting_mod" output="screen"/>
+  <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+</launch>

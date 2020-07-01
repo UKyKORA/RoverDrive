@@ -22,11 +22,17 @@ class DriveMotor:
 
     def callback(self, msg):
         '''consumes a twist message and converts it tank control motor values'''
-        motor_settings = self._perfom_tform_on_drive_motors(msg.linear.y, msg.angular.x)
+        motor_settings = self._perform_tform_on_drive_motors(msg.linear.y, msg.angular.x)
         self.drive_controller.set_vels_from_dict(motor_settings)
 
-    def _perfom_tform_on_drive_motors(self, linear_y, angular_x):
-        return {wheel: tform(linear_y, angular_x) for wheel, tform in self.twist_tform_dict.items()}
+    def callback_axis_mod(self, msg):
+        '''consumes a twist message that is off axis (from twist_keyboard) '''
+        motor_settings = self._perform_tform_on_drive_motors(msg.linear.x, msg.angular.z)
+        self.drive_controller.set_vels_from_dict(motor_settings)
+
+    def _perform_tform_on_drive_motors(self, linear_y, angular_x):
+        tform = {wheel: tform(linear_y, angular_x) for wheel, tform in self.twist_tform_dict.items()}
+        return tform
 
 def launch():
     rospy.init_node('four_wheel_drive')
@@ -40,6 +46,7 @@ def launch():
     DriveMotor.ANG_MAX = rospy.get_param("/drive/ang_max")
 
     rospy.Subscriber("/drive_setting", Twist, fwd.callback)
+    rospy.Subscriber("/drive_setting_mod", Twist, fwd.callback_axis_mod)
     rospy.spin()
 
 if __name__ == '__main__':
