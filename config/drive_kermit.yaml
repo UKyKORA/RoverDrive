@@ -1,0 +1,4 @@
+port: "/dev/serial0" # harware serial connected to sbmc
+lin_max: 1   # max linear velocity in m/s
+ang_max: 2 # max angular velocity in rads/s
+
