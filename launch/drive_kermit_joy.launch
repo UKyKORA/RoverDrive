@@ -1,0 +1,8 @@
+<launch>
+  <group ns="drive">
+    <rosparam file="$(find drive)/config/drive_kermit.yaml"/>
+  </group>
+  <node pkg="joy" type="joy_node" name="joystick_input" />
+  <node pkg="joy" type="joy_twist_remap.py" name="joystick_remap" />
+  <node pkg="sbmc_servo_control" type="servo_control.py" name="servo_remap" />
+</launch>
