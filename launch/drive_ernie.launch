@@ -3,5 +3,10 @@
     <rosparam file="$(find drive)/config/drive_ernie.yaml" />
   </group>
   <node pkg="drive" type="drive_4_motor.py" name="four_wheel_drive" output="screen"></node>
+  <node pkg="ernie_tf" type="ernie_tf" name="ernie_tf"></node>
   <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+  <arg name="realsense" default="false"/>
+  <group if="$(eval realsense == 'true')">
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+  </group>
 </launch>
